@@ -9,7 +9,7 @@ angular.module('starter', ['ionic', 'ionic.cloud', 'starter.controllers', 'start
 
     .constant('API_URL', 'http://plumoapi.codeandroses.com/')
 
-    .run(function ($ionicPlatform) {
+    .run(function ($ionicPlatform, $ionicPush) {
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -23,12 +23,30 @@ angular.module('starter', ['ionic', 'ionic.cloud', 'starter.controllers', 'start
                 StatusBar.styleDefault();
             }
         });
+
+        $ionicPush.register().then(function(t) {
+            return $ionicPush.saveToken(t);
+        }).then(function(t) {
+            console.log('Token saved:', t.token);
+        });
     })
 
     .config(function ($ionicCloudProvider) {
         $ionicCloudProvider.init({
             "core": {
                 "app_id": "fb3834c0"
+            },
+            "push": {
+                "sender_id": "520207412152",
+                "pluginConfig": {
+                    "ios": {
+                        "badge": true,
+                        "sound": true
+                    },
+                    "android": {
+                        "iconColor": "#343434"
+                    }
+                }
             }
         });
     })
@@ -50,46 +68,37 @@ angular.module('starter', ['ionic', 'ionic.cloud', 'starter.controllers', 'start
 
             // Each tab has its own nav history stack:
 
-            .state('tab.dash', {
-                url: '/dash',
+            .state('tab.tasks', {
+                url: '/tasks',
                 views: {
-                    'tab-dash': {
-                        templateUrl: 'templates/tab-dash.html',
-                        controller: 'DashCtrl'
+                    'tab-tasks': {
+                        templateUrl: 'templates/tab-tasks.html',
+                        controller: 'TasksCtrl'
                     }
                 }
             })
 
-            .state('tab.chats', {
-                url: '/chats',
+            .state('tab.rooms', {
+                url: '/rooms',
                 views: {
-                    'tab-chats': {
-                        templateUrl: 'templates/tab-chats.html',
-                        controller: 'ChatsCtrl'
-                    }
-                }
-            })
-            .state('tab.chat-detail', {
-                url: '/chats/:chatId',
-                views: {
-                    'tab-chats': {
-                        templateUrl: 'templates/chat-detail.html',
-                        controller: 'ChatDetailCtrl'
+                    'tab-rooms': {
+                        templateUrl: 'templates/tab-rooms.html',
+                        controller: 'RoomsCtrl'
                     }
                 }
             })
 
-            .state('tab.account', {
-                url: '/account',
+            .state('tab.users', {
+                url: '/users',
                 views: {
-                    'tab-account': {
-                        templateUrl: 'templates/tab-account.html',
-                        controller: 'AccountCtrl'
+                    'tab-users': {
+                        templateUrl: 'templates/tab-users.html',
+                        controller: 'UsersCtrl'
                     }
                 }
             });
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/tab/dash');
+        $urlRouterProvider.otherwise('/tab/tasks');
 
     });
