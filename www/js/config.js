@@ -1,6 +1,6 @@
 angular.module('plumo')
 
-    .constant('API_URL', 'http://192.168.10.10/api')
+    .constant('API_URL', 'http://plumoapi.codeandroses.com/api')
 
     .config(function ($ionicCloudProvider) {
         $ionicCloudProvider.init({
@@ -21,13 +21,8 @@ angular.module('plumo')
             }
         });
     })
-    
-    .run(function ($ionicPlatform, $ionicPush, $rootScope, Auth, $location) {
-        $ionicPush.register().then(function(t){
-            console.log(t);
-        }).then(function(t){
-            console.log(t);
-        });
+
+    .run(function ($ionicPlatform, $rootScope, Auth, $location) {
 
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

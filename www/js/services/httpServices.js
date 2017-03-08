@@ -1,6 +1,6 @@
 angular.module('plumo.services')
 
-    .factory('HttpClient', function($http, API_URL){
+    .factory('HttpClient', function($http, API_URL, Token){
         return {
             get: get,
             post: post,
@@ -38,6 +38,13 @@ angular.module('plumo.services')
 
             if (angular.isDefined(data)) {
                 config.data = angular.toJson(data);
+            }
+
+            if(typeof Token.getToken() === 'string'){
+                config.headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+ Token.getToken()
+                }
             }
 
             return $http(config);

@@ -16,7 +16,7 @@ angular.module('plumo.services')
         }
     })
 
-    .factory('Auth', function (HttpClient, Token, $ionicPush) {
+    .factory('Auth', function (HttpClient, Token) {
         return {
             login: function (email, password) {
                 return HttpClient.post('/login', {
@@ -24,19 +24,7 @@ angular.module('plumo.services')
                     password: password
                 }).then(function(response){
                     Token.setToken(response.data.token);
-                    console.log($ionicPush.register().then(function(t){
-                        console.log(t);
-                    }));
-                    $ionicPush.register().then(function(t) {
-                        HttpClient.put('/user', {
-                            app_id: t
-                        }).then(function(response){
-                            $ionicPush.saveToken(t);
-                            return response.data;
-                        });
-                    }).then(function(t) {
-                        console.log('Token saved:', t.token);
-                    });
+                    return true;
                 }, function (error) {
                     console.log(error);
                     Token.setToken();
