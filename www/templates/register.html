@@ -1,0 +1,28 @@
+<ion-view view-title="Inscription">
+    <ion-content>
+        <div class="list">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Nom</span>
+                <input type="text" placeholder="Nom" ng-model="form.name">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Adresse email</span>
+                <input type="email" placeholder="Adresse email" ng-model="form.email">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Mot de passe</span>
+                <input type="password" placeholder="Mot de passe" ng-model="form.password">
+            </label>
+            <div class="padding">
+                <button class="button button-block button-positive" ng-click="register(form)">
+                    Inscription
+                </button>
+            </div>
+            <div class="padding">
+                <p class="text-center">
+                    Vous avez déjà un compte ? <a ui-sref="login">Connectez-vous</a>
+                </p>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
