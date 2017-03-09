@@ -1,22 +1,26 @@
 <ion-view view-title="Tâches">
-    <ion-content class="padding">
-        <ion-list>
-            <div class="card" ng-repeat="task in tasks">
-                <div class="item item-divider">
-                    {{task.room.name}}
-                </div>
-                <div class="item item-text-wrap item-button-right">
-                    {{task.name}} <br>
-                    {{task.description}}
-                    <button class="button button-positive padding">
-                        <i class="icon ion-checkmark-round"></i>
-                    </button>
-                </div>
-                <div class="item item-divider">
-                    5h restantes
-                </div>
-            </div>
-        </ion-list>
-    </ion-content>
+	<ion-content class="padding">
+		<ion-list>
+			<div class="card" ng-repeat="task in tasks | orderBy: 'date'" ng-class="{'list-group-item-success' : task.done, 'list-group-item-warning' : $scope.isExpired(task.date) && !task.done }">
+				<div class="item item-divider">
+					{{task.room.name}}
+				</div>
+				<div class="item item-text-wrap item-button-right">
+					{{task.name}} <br>
+					{{task.description}}
+
+					<button class="button button-positive padding" ng-if="!task.done" ng-click="performTask(task)" >
+						<i class="icon ion-checkmark"></i>
+					</button>
+					<button class="button button-assertive padding" ng-if="task.done" ng-click="deleteTask(task)">
+						<i class="icon ion-trash-b"></i>
+					</button>
+				</div>
+				<div class="item item-divider">
+					5h restantes
+				</div>
+			</div>
+		</ion-list>
+	</ion-content>
 </ion-view>
 
