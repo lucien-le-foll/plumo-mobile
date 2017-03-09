@@ -1,11 +1,78 @@
 <ion-view view-title="Pièces">
-    <ion-content>
-        <ion-list>
-            <ion-item class="item-remove-animate item-avatar item-icon-right">
-                <h2>Coucou</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias commodi corporis cumque deleniti, dolorem dolorum ducimus est facilis ipsam, necessitatibus quo ratione recusandae reiciendis tempora, veritatis voluptates voluptatibus voluptatum.</p>
-                <i class="icon ion-chevron-right icon-accessory"></i>
-            </ion-item>
-        </ion-list>
+    <ion-content class="padding">
+        <script id="ajout-tache.html" type="text/ng-template">
+            <ion-modal-view>
+                <ion-header-bar class="bar bar-header bar-positive">
+                    <h1 class="title">Ajouter une tâche</h1>
+                    <button class="button button-clear button-primary" ng-click="taskModal.hide()">Cancel</button>
+                </ion-header-bar>
+                <ion-content class="padding">
+                    <div class="list">
+                        <label class="item item-input">
+                            <span class="input-label">Nom de la tâche</span>
+                            <input type="text" ng-model="newTask.name">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Description</span>
+                            <input type="text" ng-model="newTask.description">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Utilisateur</span>
+                            <select name="Select-user" id="Select-user" ng-model="newTask.user_id">
+                                <option ng-repeat="user in house.users" value="{{user.id}}">{{user.name}}</option> 
+                            </select>
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Date</span>
+                            <input type="date" ng-model="newTask.date">
+                        </label>
+                        <button class="button button-full button-positive" ng-click="saveTask(newTask, selectedRoom)">Create</button>
+                    </div>
+                </ion-content>
+            </ion-modal-view>
+        </script>
+
+        <script id="ajout-piece.html" type="text/ng-template">
+            <ion-modal-view>
+                <ion-header-bar class="bar bar-header bar-positive">
+                    <h1 class="title">Ajouter une pièce</h1>
+                    <button class="button button-clear button-primary" ng-click="roomModal.hide()">Cancel</button>
+                </ion-header-bar>
+                <ion-content class="padding">
+                    <div class="list">
+                        <label class="item item-input">
+                            <span class="input-label">Nom de la pièce</span>
+                            <input ng-model="newUser.firstName" type="text">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Description</span>
+                            <input ng-model="newUser.lastName" type="text">
+                        </label>
+                        <button class="button button-full button-positive" ng-click="blabla()">Create</button>
+                    </div>
+                </ion-content>
+            </ion-modal-view>
+        </script>
+
+        <div class="list">
+            <div ng-repeat="room in house.rooms">
+                <div class="item item-divider item-button-right">
+                    {{room.name}}
+                </div>
+
+                <div class="item item-button-right" ng-repeat="task in room.tasks">
+                    {{task.name}} <br>
+                    {{task.description}} <br>
+                    Pour {{task.user.name}}
+                </div>
+                <a class="item item-icon-left" ng-click="openModal('task', room)">
+                    <i class="icon ion-plus-round"></i>
+                    Ajouter une tâche
+                </a>
+            </div>
+        </div>
+        <button class="button button-block button-positive" ng-click="roomModal.show()">
+            Ajouter une pièce
+        </button>
     </ion-content>
 </ion-view>
